@@ -14,11 +14,26 @@ def initDB():
     return mydb
 
 def get_dir(folderName: str, cursor, dataBase):
-    baseDir = os.path.dirname(os.path.abspath(__file__)) 
-    csvDir = os.path.join(baseDir, folderName)
-    for fileName in os.listdir(csvDir):
-        fileDir = os.path.join(csvDir, fileName)
+    '''
+    folder_path = os.path.join(os.getcwd(), folderName)
+    for fileName in os.listdir(folder_path):
+        fileDir = os.path.join(folder_path, fileName)
         parse_csv(fileDir, fileName, cursor, dataBase)
+    '''
+    folder_path = os.path.join(os.getcwd(), folderName)
+    parse_csv(os.path.join(folder_path, "User.csv"), "User.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "AgentCreator.csv"), "AgentCreator.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "AgentClient.csv"), "AgentClient.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "BaseModel.csv"), "BaseModel.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "CustomizedModel.csv"), "CustomizedModel.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "Configuration.csv"), "Configuration.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "InternetService.csv"), "InternetService.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "LLMService.csv"), "LLMService.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "DataStorage.csv"), "DataStorage.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "ModelServices.csv"), "ModelServices.csv", cursor, dataBase)
+    parse_csv(os.path.join(folder_path, "ModelConfigurations.csv"), "ModelConfigurations.csv", cursor, dataBase)
+
+
 
 
 
