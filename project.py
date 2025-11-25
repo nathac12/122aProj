@@ -28,7 +28,9 @@ def main():
             folderName = args[2]
             importTables.load_csv(folderName, myCursor, dataBase)
         case "insertAgentClient":
-            return 0
+            sql = f"INSERT into AgentClient (uid, interests, cardholder, expire, cardno, cvv, zip) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (args[2], args[3], args[4], args[5], args[6], args[7], args[8])
+            myCursor.execute(sql, val)
         case "addCustomizedModel":
             return 0
         case "deleteBaseModel":
