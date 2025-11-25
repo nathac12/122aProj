@@ -13,15 +13,14 @@ def initDB():
     )
     return mydb
 
-def get_dir(targetName: str):
+def get_dir(folderName: str, cursor, dataBase):
     baseDir = os.path.dirname(os.path.abspath(__file__)) 
-    csvDir = os.path.join(baseDir, "test_data_project_122a")
-    for filename in os.listdir(csvDir):
-        if targetName in filename:  
-            print("Found:", filename)
-            return os.path.join(csvDir, filename)
-    print("file not found")
-    return None
+    csvDir = os.path.join(baseDir, folderName)
+    for fileName in os.listdir(csvDir):
+        fileDir = os.path.join(csvDir, fileName)
+        parse_csv(fileDir, fileName, cursor, dataBase)
+
+
 
 def parse_csv(fileDir: str, fileName: str, cursor, dataBase):
     file = open(fileDir, newline="")
@@ -69,16 +68,17 @@ def initTables(cursor):
 def main():
     args = sys.argv
     funcName = args[FUNCINDEX]
+
     dataBase = initDB()
-    print(dataBase)
     myCursor = dataBase.cursor()
     myCursor.execute("USE cs122a")
     initTables(myCursor)
+
     # no need to check args length
     match funcName:
         case "import":
-            fileName = args[2]
-            parse_csv(get_dir(fileName), fileName, myCursor, dataBase)
+            folderName = args[2]
+            get_dir(folderName, myCursor, dataBase)
         case "insertAgentClient":
             return 0
         case "addCustomizedModel":
