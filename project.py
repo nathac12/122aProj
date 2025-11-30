@@ -20,7 +20,7 @@ def main():
     args = sys.argv
     print(args)
     funcName = args[FUNCINDEX]
-
+    data = args[2:]
     dataBase = initDB()
     myCursor = dataBase.cursor()
     myCursor.execute("USE cs122a")
@@ -32,13 +32,13 @@ def main():
             folderName = args[2]
             importTables.load_csv(folderName, myCursor, dataBase)
         case "insertAgentClient":
-            command.insertAgentClient(args[2:], myCursor, dataBase)
+            command.insertAgentClient(data, myCursor, dataBase)
         case "addCustomizedModel":
-            return 0
+            command.addCustomizedModel(data, myCursor, dataBase)
         case "deleteBaseModel":
-            return 0
+            command.deleteBaseModel(data, myCursor, dataBase)
         case "listInternetService":
-            return 0
+            command.listInternetService(data, myCursor, dataBase)
         case "countCustomizedModel":
             return 0
         case "topNDurationConfig":
