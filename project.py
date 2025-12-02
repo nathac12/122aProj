@@ -50,7 +50,8 @@ def main():
             result = command.countCustomizedModel(data, myCursor, dataBase)
             printTable(result)
         case "topNDurationConfig":
-            return 0
+            result = command.topNLongestDurationConfiguration(data, myCursor, dataBase)
+            printTable(result)
         case " listBaseModelKeyWord":
             return 0
         case _:

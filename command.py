@@ -82,3 +82,20 @@ def countCustomizedModel(args, myCursor, dataBase):
 
     myCursor.execute(sql, bmids)
     return myCursor.fetchall()
+
+def topNLongestDurationConfiguration(args, myCursor, dataBase):
+
+    uid = args[0]
+    N = args[1]
+
+    sql = f"""
+        SELECT C.client_uid, C.cid, C.labels, C.content, MC.duration
+        FROM Configuration AS C
+        JOIN ModelConfigurations MC ON C.cid = MC.cid
+        WHERE C.client_uid = %s
+        ORDER BY MC.duration DESC
+        LIMIT {N}
+        """
+
+    myCursor.execute(sql, (uid, ))
+    return myCursor.fetchall()
