@@ -3,8 +3,6 @@ import sys
 import importTables
 import command
 FUNCINDEX = 1
-USER = "root"
-PASSWORD = ""
 def initDB():
     mydb = mysql.connector.connect(
         #edpost said to format it like this, this is what they will run on the autograder
@@ -52,8 +50,9 @@ def main():
         case "topNDurationConfig":
             result = command.topNLongestDurationConfiguration(data, myCursor, dataBase)
             printTable(result)
-        case " listBaseModelKeyWord":
-            return 0
+        case "listBaseModelKeyWord":
+            result = command.listBaseModelKeyWord(data, myCursor, dataBase)
+            printTable(result)
         case _:
             print("wrong function name")
             return -1
