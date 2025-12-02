@@ -18,27 +18,34 @@ def initDB():
 
 def main():
     args = sys.argv
-    print(args)
+    print(f"[TEST] args: {args}")
     funcName = args[FUNCINDEX]
     data = args[2:]
     dataBase = initDB()
     myCursor = dataBase.cursor()
     myCursor.execute("USE cs122a")
 
+
     # no need to check args length
     match funcName:
         case "import":
             importTables.initTables(myCursor)
             folderName = args[2]
-            importTables.load_csv(folderName, myCursor, dataBase)
+
+            result = importTables.load_csv(folderName, myCursor, dataBase)
+            printIsSuccess(result)
         case "insertAgentClient":
-            command.insertAgentClient(data, myCursor, dataBase)
+            result = command.insertAgentClient(data, myCursor, dataBase)
+            printIsSuccess(result)
         case "addCustomizedModel":
-            command.addCustomizedModel(data, myCursor, dataBase)
+            result = command.addCustomizedModel(data, myCursor, dataBase)
+            printIsSuccess(result)
         case "deleteBaseModel":
-            command.deleteBaseModel(data, myCursor, dataBase)
+            result = command.deleteBaseModel(data, myCursor, dataBase)
+            printIsSuccess(result)
         case "listInternetService":
-            command.listInternetService(data, myCursor, dataBase)
+            result = command.listInternetService(data, myCursor, dataBase)
+            printTable(result)
         case "countCustomizedModel":
             return 0
         case "topNDurationConfig":
@@ -48,6 +55,18 @@ def main():
         case _:
             print("wrong function name")
             return -1
+
+
+def printIsSuccess(isSuccess : bool):
+    if isSuccess:
+        print("Success")
+    else:
+        print("Fail")
+
+def printTable(rows : list[tuple]):
+    for row in rows:
+        line = ",".join(str(value) for value in row)
+        print(line)
 
 
 

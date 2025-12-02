@@ -12,10 +12,11 @@ def insertAgentClient(args, myCursor, dataBase):
         )
         dataBase.commit()
         return True
-    except Exception as e: 
-        print(e)
-    
 
+    except Exception as e:
+        print(e)
+        return False
+    
 def addCustomizedModel(args, myCursor, dataBase):
     mid, bmid = args
     try:
@@ -25,6 +26,7 @@ def addCustomizedModel(args, myCursor, dataBase):
         )
         dataBase.commit()
         return True
+
     except Exception as e: 
         print(e)
         return False
@@ -56,5 +58,9 @@ def listInternetService(args, myCursor, dataBase):
         """
     myCursor.execute(sql, (bmid,))
     myresult = myCursor.fetchall()
-    for x in myresult:
-        print(x)
+
+    return myresult
+
+
+# def countCustomizedModel(args, myCursor, dataBase)(""
+#                                                    "")

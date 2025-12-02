@@ -4,36 +4,53 @@ import csv
 def load_csv(folderName: str, cursor, dataBase):
    #cant loop through the folder, we need to insert in a certain order due to relations
     folder_path = os.path.join(os.getcwd(), folderName)
-    parse_csv(os.path.join(folder_path, "User.csv"), "User.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "AgentCreator.csv"), "AgentCreator.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "AgentClient.csv"), "AgentClient.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "BaseModel.csv"), "BaseModel.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "CustomizedModel.csv"), "CustomizedModel.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "Configuration.csv"), "Configuration.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "InternetService.csv"), "InternetService.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "LLMService.csv"), "LLMService.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "DataStorage.csv"), "DataStorage.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "ModelServices.csv"), "ModelServices.csv", cursor, dataBase)
-    parse_csv(os.path.join(folder_path, "ModelConfigurations.csv"), "ModelConfigurations.csv", cursor, dataBase)
+
+    requiredCSVs = [
+        "User.csv",
+        "AgentCreator.csv",
+        "AgentClient.csv",
+        "BaseModel.csv",
+        "CustomizedModel.csv",
+        "Configuration.csv",
+        "InternetService.csv",
+        "LLMService.csv",
+        "DataStorage.csv",
+        "ModelServices.csv",
+        "ModelConfigurations.csv"
+    ]
+
+    for filename in requiredCSVs:
+       full_path = os.path.join(folder_path, filename)
+       ok = parse_csv(full_path, filename, cursor, dataBase)
+
+       if not ok:
+            # missing file
+           return False
+
+    return True
 
 
 def parse_csv(fileDir: str, fileName: str, cursor, dataBase):
-    file = open(fileDir, newline="")
+    try:
+        file = open(fileDir, newline="")
+    except FileNotFoundError:
+        return False
+
     fileName = fileName[:-4]
 
-    reader = csv.reader(file)
-    header = next(reader)
-    columns = ", ".join(header)
-    placeholders = ", ".join(["%s"] * len(header))
+    with file:
+        reader = csv.reader(file)
+        header = next(reader)
+        columns = ", ".join(header)
+        placeholders = ", ".join(["%s"] * len(header))
 
-    sql = f"INSERT INTO {fileName} ({columns}) VALUES ({placeholders})"
-    rows = []
-    for row in reader:
-        rows.append(row) 
+        sql = f"INSERT INTO {fileName} ({columns}) VALUES ({placeholders})"
+        rows = [row for row in reader]
 
-    val = rows
-    cursor.executemany(sql, val)
-    dataBase.commit()
+        cursor.executemany(sql, rows)
+        dataBase.commit()
+
+    return True
 
 def initTables(cursor):
     cursor.execute("DROP TABLE IF EXISTS ModelConfigurations")
