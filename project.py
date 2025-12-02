@@ -47,7 +47,8 @@ def main():
             result = command.listInternetService(data, myCursor, dataBase)
             printTable(result)
         case "countCustomizedModel":
-            return 0
+            result = command.countCustomizedModel(data, myCursor, dataBase)
+            printTable(result)
         case "topNDurationConfig":
             return 0
         case " listBaseModelKeyWord":

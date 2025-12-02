@@ -62,5 +62,23 @@ def listInternetService(args, myCursor, dataBase):
     return myresult
 
 
-# def countCustomizedModel(args, myCursor, dataBase)(""
-#                                                    "")
+def countCustomizedModel(args, myCursor, dataBase):
+
+    bmids = sorted(int(x) for x in args)
+
+    if not bmids:
+        return []
+
+    placeholders = ", ".join(["%s"] * len(bmids)) # a lot of "%s, %s, ..."
+
+    sql = f"""
+        SELECT M.bmid, B.description, COUNT(*)
+        FROM CustomizedModel as M
+        JOIN BaseModel B ON M.bmid = B.bmid
+        WHERE M.bmid IN ({placeholders})
+        GROUP BY M.bmid, B.description
+        ORDER BY M.bmid ASC
+        """
+
+    myCursor.execute(sql, bmids)
+    return myCursor.fetchall()
