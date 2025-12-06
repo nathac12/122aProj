@@ -45,7 +45,7 @@ def parse_csv(fileDir: str, fileName: str, cursor, dataBase):
         columns = ", ".join(header)
         placeholders = ", ".join(["%s"] * len(header))
 
-        sql = f"INSERT INTO {fileName} ({columns}) VALUES ({placeholders})"
+        sql = f"INSERT IGNORE INTO {fileName} ({columns}) VALUES ({placeholders})"
         rows = [row for row in reader]
 
         cursor.executemany(sql, rows)
