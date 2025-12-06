@@ -16,7 +16,7 @@ def initDB():
 
 def main():
     args = sys.argv
-    print(f"[TEST] args: {args}")
+   # print(f"[TEST] args: {args}")
     funcName = args[FUNCINDEX]
     data = args[2:]
     dataBase = initDB()
