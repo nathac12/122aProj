@@ -25,7 +25,8 @@ def load_csv(folderName: str, cursor, dataBase):
 
        if not ok:
             # missing file
-           return False
+            print("missing file")
+            return False
 
     return True
 
@@ -67,7 +68,7 @@ def initTables(cursor):
 
     cursor.execute("CREATE TABLE User (uid INT,email TEXT NOT NULL,username TEXT NOT NULL,PRIMARY KEY (uid))")
     cursor.execute("CREATE TABLE AgentCreator (uid INT,bio TEXT,payout TEXT,PRIMARY KEY (uid),FOREIGN KEY (uid) REFERENCES User(uid) ON DELETE CASCADE)")
-    cursor.execute("CREATE TABLE AgentClient (uid INT,interests TEXT NOT NULL,cardholder TEXT NOT NULL,expire DATE NOT NULL,cardno INT NOT NULL,cvv INT NOT NULL,zip INT NOT NULL,PRIMARY KEY (uid),FOREIGN KEY (uid) REFERENCES User(uid) ON DELETE CASCADE)")
+    cursor.execute("CREATE TABLE AgentClient (uid INT,interests TEXT NOT NULL,cardholder TEXT NOT NULL,expire DATE NOT NULL,cardno BIGINT NOT NULL,cvv INT NOT NULL,zip INT NOT NULL,PRIMARY KEY (uid),FOREIGN KEY (uid) REFERENCES User(uid) ON DELETE CASCADE)")
     cursor.execute("CREATE TABLE BaseModel (bmid INT,creator_uid INT NOT NULL,description TEXT NOT NULL,PRIMARY KEY (bmid),FOREIGN KEY (creator_uid) REFERENCES AgentCreator(uid) ON DELETE CASCADE)")
     cursor.execute("CREATE TABLE CustomizedModel (bmid INT,mid INT NOT NULL,PRIMARY KEY (bmid, mid),FOREIGN KEY (bmid) REFERENCES BaseModel(bmid) ON DELETE CASCADE)")
     cursor.execute("CREATE TABLE Configuration (cid INT,client_uid INT NOT NULL,content TEXT NOT NULL,labels TEXT NOT NULL,PRIMARY KEY (cid),FOREIGN KEY (client_uid) REFERENCES AgentClient(uid) ON DELETE CASCADE)")
