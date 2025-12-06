@@ -2,11 +2,6 @@ def insertAgentClient(args, myCursor, dataBase):
     uid, username, email, cardnum, cardholder, exp, cvv, zip_code, interests = args
     try:
         myCursor.execute(
-            "INSERT INTO User(uid, email, username) VALUES (%s, %s, %s)",
-            (uid, email, username)
-        )
-        
-        myCursor.execute(
             "INSERT INTO AgentClient(uid, interests, cardholder, expire, cardno, cvv, zip) VALUES (%s, %s, %s, %s, %s, %s, %s)",
             (uid, interests, cardholder, exp, cardnum, cvv, zip_code)
         )
@@ -14,7 +9,7 @@ def insertAgentClient(args, myCursor, dataBase):
         return True
 
     except Exception as e:
-        print(e)
+        #print(e)
         return False
     
 def addCustomizedModel(args, myCursor, dataBase):
@@ -28,7 +23,7 @@ def addCustomizedModel(args, myCursor, dataBase):
         return True
 
     except Exception as e: 
-        print(e)
+        #print(e)
         return False
     
 def deleteBaseModel(args, myCursor, dataBase):
@@ -36,7 +31,7 @@ def deleteBaseModel(args, myCursor, dataBase):
     bmid = args[0]
     myCursor.execute("SELECT 1 FROM BaseModel WHERE bmid = %s", (bmid,))
     if myCursor.fetchone() is None:
-        print("cant find")
+        #print("cant find")
         return False  # no such model
 
     try:
@@ -44,7 +39,7 @@ def deleteBaseModel(args, myCursor, dataBase):
         dataBase.commit()
         return True
     except Exception as e: 
-        print(e)
+        #print(e)
         return False
     
 def listInternetService(args, myCursor, dataBase):
