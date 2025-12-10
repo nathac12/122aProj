@@ -115,5 +115,6 @@ def listBaseModelKeyWord(args, myCursor, dataBase):
     return myCursor.fetchall()
 
 def printNL2SQLresult(myCursor, dataBase):
+    return myCursor.fetchall()
 
 
