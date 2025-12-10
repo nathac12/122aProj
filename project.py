@@ -53,6 +53,9 @@ def main():
         case "listBaseModelKeyWord":
             result = command.listBaseModelKeyWord(data, myCursor, dataBase)
             printTable(result)
+        case "printNL2SQLresult":
+            result = command.printNL2SQLresult(myCursor, dataBase)
+            printTable(result)
         case _:
             print("wrong function name")
             return -1
@@ -68,8 +71,6 @@ def printTable(rows : list[tuple]):
     for row in rows:
         line = ",".join(str(value) for value in row)
         print(line)
-
-
 
 if __name__ == "__main__":
     main()

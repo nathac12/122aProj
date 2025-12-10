@@ -113,3 +113,7 @@ def listBaseModelKeyWord(args, myCursor, dataBase):
 
     myCursor.execute(sql, (keyword,))
     return myCursor.fetchall()
+
+def printNL2SQLresult(myCursor, dataBase):
+
+
