@@ -101,14 +101,14 @@ def listBaseModelKeyWord(args, myCursor, dataBase):
     selectNum = 5
 
     sql = f"""
-        SELECT B.bmid, M.sid, I.provider, L.domain
-        FROM BaseModel AS B
-        JOIN ModelServices M ON M.bmid = B.bmid AND B.description LIKE %s
-        JOIN InternetService I ON I.sid = M.sid
-        JOIN LLMService L ON L.sid = I.sid
-        ORDER BY B.bmid ASC
+        SELECT M.bmid, I.sid,I.provider,L.domain
+        FROM ModelServices M
+        JOIN InternetService I ON M.sid = I.sid
+        JOIN LLMService L ON I.sid = L.sid
+        WHERE L.domain LIKE %s
+        ORDER BY M.bmid ASC
         LIMIT {selectNum}
-        """
+    """
 
     myCursor.execute(sql, (keyword,))
     return myCursor.fetchall()
