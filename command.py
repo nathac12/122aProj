@@ -84,16 +84,12 @@ def topNLongestDurationConfiguration(args, myCursor, dataBase):
     N = args[1]
 
     sql = f"""
-        SELECT C.client_uid, 
-               C.cid, 
-               C.labels, 
-               C.content, 
-               MAX(MC.duration) AS duration
+        SELECT C.client_uid, C.cid, C.labels, C.content, MAX(MC.duration) AS maxDuration
         FROM Configuration C
         JOIN ModelConfigurations MC ON C.cid = MC.cid
         WHERE C.client_uid = %s
-        GROUP BY C.client_uid, C.cid, C.labels, C.content
-        ORDER BY duration DESC
+        GROUP BY C.cid
+        ORDER BY maxDuration DESC
         LIMIT {N}
     """
 
