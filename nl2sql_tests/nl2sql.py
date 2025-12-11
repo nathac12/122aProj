@@ -1,14 +1,13 @@
 import csv
-
+import os
 def printNL2SQLresult():
+    folder_path = os.path.join(os.getcwd(), "nl2sql_tests")
+    full_path = os.path.join(folder_path, "nl2sql_results.csv")
     try:
-        with open("nl2sql_results.csv", newline="", encoding="utf-8") as f:
+        with open(full_path, newline="", encoding="utf-8") as f:
             reader = csv.reader(f)
             for row in reader:
                 print(", ".join(str(col) for col in row))
     except FileNotFoundError:
         print("File not found.")
 
-
-if __name__ == "__main__":
-    printNL2SQLresult()

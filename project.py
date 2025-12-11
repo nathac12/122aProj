@@ -2,6 +2,7 @@ import mysql.connector
 import sys
 import importTables
 import command
+from nl2sql_tests import nl2sql
 FUNCINDEX = 1
 def initDB():
     mydb = mysql.connector.connect(
@@ -9,8 +10,8 @@ def initDB():
         #make sure to run the queries in ed post #251 on your local mysql server to create the database
         #https://edstem.org/us/courses/88195/discussion/7345549
         host="localhost",
-        user="root",
-        password="232168App"
+        user="test",
+        password="password"
     )
     return mydb
 
@@ -54,8 +55,7 @@ def main():
             result = command.listBaseModelKeyWord(data, myCursor, dataBase)
             printTable(result)
         case "printNL2SQLresult":
-            result = command.printNL2SQLresult(myCursor, dataBase)
-            printTable(result)
+            nl2sql.printNL2SQLresult()
         case _:
             print("wrong function name")
             return -1
