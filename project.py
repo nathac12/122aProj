@@ -2,7 +2,7 @@ import mysql.connector
 import sys
 import importTables
 import command
-from nl2sql_tests import nl2sql
+import nl2sql
 FUNCINDEX = 1
 def initDB():
     mydb = mysql.connector.connect(

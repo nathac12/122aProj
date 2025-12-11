@@ -1,8 +1,7 @@
 import csv
 import os
 def printNL2SQLresult():
-    folder_path = os.path.join(os.getcwd(), "nl2sql_tests")
-    full_path = os.path.join(folder_path, "nl2sql_results.csv")
+    full_path = os.path.join(os.getcwd(), "nl2sql_results.csv")
     try:
         with open(full_path, newline="", encoding="utf-8") as f:
             reader = csv.reader(f)
