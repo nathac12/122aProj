@@ -9,8 +9,8 @@ def initDB():
         #make sure to run the queries in ed post #251 on your local mysql server to create the database
         #https://edstem.org/us/courses/88195/discussion/7345549
         host="localhost",
-        user="test",
-        password="password"
+        user="root",
+        password="232168App"
     )
     return mydb
 
